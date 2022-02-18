@@ -5,9 +5,11 @@ interface AvatarProps {
 }
 const Avatar = ({ user }: AvatarProps) => {
   return (
-    <div className="relative w-[50px]">
+    <div className="inline-block relative w-[50px]">
       <img src={user.profilePicture} />
-      <div className="absolute w-[10px] h-[10px] bg-[#00C514] bottom-0 right-0 border border-white rounded-full"></div>
+      {user.isActive ? (
+        <div className="absolute w-[10px] h-[10px] bg-[#00C514] bottom-0 right-0 border border-white rounded-full"></div>
+      ) : null}
     </div>
   );
 };

@@ -9,6 +9,7 @@ import NavHeader from 'components/NavHeader';
 import Chats from 'components/Chats';
 import { useEffect, useState } from 'react';
 import Messages from 'components/Messages';
+import Avatar from 'components/Avatar';
 
 export interface LandingPageProps {
   users: UserInterface[];
@@ -17,14 +18,16 @@ export interface LandingPageProps {
 }
 
 const LandingPage = ({ users, chats, messages }: LandingPageProps) => {
-  console.log({ users, chats, messages });
   const [selectedChatId, selectChatId] = useState<string>();
   const [selectedUser, selectUser] = useState<UserInterface>();
   const [selectedMessages, selectMessages] = useState<MessageInterface[]>();
+  const usersWithIsActive = users.map((u) => {
+    return { ...u, isActive: chats.find((c) => c.withUser === u.id).isActive };
+  });
   useEffect(() => {
     if (selectedChatId) {
       const chat = chats.find((c) => c.id === selectedChatId);
-      selectUser(users.find((u) => u.id === chat.withUser));
+      selectUser(usersWithIsActive.find((u) => u.id === chat.withUser));
       selectMessages(
         chat.messages.map((messageId) =>
           messages.find((m) => m.id === messageId)
@@ -39,7 +42,7 @@ const LandingPage = ({ users, chats, messages }: LandingPageProps) => {
           <ClubLogoSvg className="w-[114px] m-auto mt-[14px] mb-[14px]" />
           <NavHeader chatsCount={chats.length} />
           <Chats
-            users={users}
+            users={usersWithIsActive}
             chats={chats}
             messages={messages}
             selectedChatId={selectedChatId}
@@ -51,7 +54,15 @@ const LandingPage = ({ users, chats, messages }: LandingPageProps) => {
         ) : (
           '...'
         )}
-        <aside className="w-[320px]">search</aside>
+        <aside className="w-[320px]  p-4">
+          {selectedUser ? (
+            <div className="text-center">
+              <Avatar user={selectedUser} />
+              <br />
+              <span className="text-lg">{selectedUser.name}</span>
+            </div>
+          ) : null}
+        </aside>
       </section>
     </>
   );

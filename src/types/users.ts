@@ -5,4 +5,5 @@ export default interface UserInterface {
   name: string;
   // url of the profilePicture
   profilePicture: string;
+  isActive?: boolean;
 }

@@ -51,7 +51,6 @@ const Chats = ({
   // clear filter search when select chat
   const searchInput = useRef<HTMLInputElement>();
   useEffect(() => {
-    console.log('clear search');
     setSearch('');
   }, [selectedChatId]);
 
