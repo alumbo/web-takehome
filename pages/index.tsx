@@ -7,6 +7,8 @@ import ChatInterface from 'types/chats';
 import MessageInterface from 'types/messages';
 import NavHeader from 'components/NavHeader';
 import Chats from 'components/Chats';
+import { useEffect, useState } from 'react';
+import Messages from 'components/Messages';
 
 export interface LandingPageProps {
   users: UserInterface[];
@@ -16,17 +18,39 @@ export interface LandingPageProps {
 
 const LandingPage = ({ users, chats, messages }: LandingPageProps) => {
   console.log({ users, chats, messages });
+  const [selectedChatId, selectChatId] = useState<string>();
+  const [selectedUser, selectUser] = useState<UserInterface>();
+  const [selectedMessages, selectMessages] = useState<MessageInterface[]>();
+  useEffect(() => {
+    if (selectedChatId) {
+      const chat = chats.find((c) => c.id === selectedChatId);
+      selectUser(users.find((u) => u.id === chat.withUser));
+      selectMessages(
+        chat.messages.map((messageId) =>
+          messages.find((m) => m.id === messageId)
+        )
+      );
+    }
+  }, [selectedChatId]);
   return (
     <>
       <section className="flex w-full h-[100vh]">
-        <nav className="w-[320px] p-[10px]  h-[100vh] overflow-auto">
+        <nav className="w-[320px] p-[12px]  h-[100vh] overflow-auto">
           <ClubLogoSvg className="w-[114px] m-auto mt-[14px] mb-[14px]" />
           <NavHeader chatsCount={chats.length} />
-          <Chats users={users} chats={chats} messages={messages} />
+          <Chats
+            users={users}
+            chats={chats}
+            messages={messages}
+            selectedChatId={selectedChatId}
+            selectChatId={selectChatId}
+          />
         </nav>
-        <article className="flex-1 border-r border-l border-silver">
-          <p className="text-[23px] mt-[8px]">main chat</p>
-        </article>
+        {selectedUser ? (
+          <Messages messages={selectedMessages} user={selectedUser} />
+        ) : (
+          '...'
+        )}
         <aside className="w-[320px]">search</aside>
       </section>
     </>
