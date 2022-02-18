@@ -1,13 +1,14 @@
-import generateUsers from "data/users";
-import generateChats from "data/chats";
+import generateUsers from 'data/users';
+import generateChats from 'data/chats';
 
-import ClubLogoSvg from "icons/club-logo.svg";
-import UserInterface from "types/users";
-import ChatInterface from "types/chats";
-import MessageInterface from "types/messages";
-import NavHeader from "components/NavHeader";
+import ClubLogoSvg from 'icons/club-logo.svg';
+import UserInterface from 'types/users';
+import ChatInterface from 'types/chats';
+import MessageInterface from 'types/messages';
+import NavHeader from 'components/NavHeader';
+import Chats from 'components/Chats';
 
-interface LandingPageProps {
+export interface LandingPageProps {
   users: UserInterface[];
   chats: ChatInterface[];
   messages: MessageInterface[];
@@ -18,14 +19,15 @@ const LandingPage = ({ users, chats, messages }: LandingPageProps) => {
   return (
     <>
       <section className="flex w-full h-[100vh]">
-        <nav className="w-[268px] p-[10px]">
-          <ClubLogoSvg className="w-[114px] m-auto mt-[10px] mb-[10px]" />
+        <nav className="w-[320px] p-[10px]  h-[100vh] overflow-auto">
+          <ClubLogoSvg className="w-[114px] m-auto mt-[14px] mb-[14px]" />
           <NavHeader chatsCount={chats.length} />
+          <Chats users={users} chats={chats} messages={messages} />
         </nav>
-        <article className="flex-1">
+        <article className="flex-1 border-r border-l border-silver">
           <p className="text-[23px] mt-[8px]">main chat</p>
         </article>
-        <aside className="w-[268px]">search</aside>
+        <aside className="w-[320px]">search</aside>
       </section>
     </>
   );
@@ -37,15 +39,15 @@ export const getServerSideProps = () => {
   const users: UserInterface[] = generateUsers();
   const {
     chats,
-    messages,
+    messages
   }: { chats: ChatInterface[]; messages: MessageInterface[] } = generateChats();
 
   return {
     props: {
       users,
       chats,
-      messages,
-    },
+      messages
+    }
   };
 };
 

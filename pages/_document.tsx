@@ -1,4 +1,10 @@
-import Document, { Html, Head, Main, NextScript, DocumentContext } from "next/document";
+import Document, {
+  Html,
+  Head,
+  Main,
+  NextScript,
+  DocumentContext
+} from 'next/document';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -10,7 +16,10 @@ class MyDocument extends Document {
     return (
       <Html lang="en-EN">
         <Head>
-          <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+          <meta
+            name="apple-mobile-web-app-status-bar-style"
+            content="default"
+          />
           <meta name="mobile-web-app-capable" content="yes" />
           <meta name="theme-color" content="#ffffff" />
         </Head>

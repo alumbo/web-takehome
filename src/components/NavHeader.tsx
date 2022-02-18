@@ -1,4 +1,4 @@
-import ProfilePicture from "images/profilePicture.png";
+import ProfilePicture from 'images/profilePicture.png';
 
 interface NavHeaderProps {
   chatsCount: number;
