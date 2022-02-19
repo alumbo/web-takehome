@@ -4,6 +4,7 @@ import Avatar from './Avatar';
 import ProfilePicture from 'images/profilePicture.png';
 import moment from 'moment';
 import { useEffect, useRef } from 'react';
+import ReactTooltip from 'react-tooltip';
 
 interface MessagesProps {
   user: UserInterface;
@@ -34,11 +35,12 @@ const Messages = ({ user, messages }: MessagesProps) => {
           {messages.map((message) => {
             return (
               <li
+                data-tip={moment(message.date).format('LLL')}
                 className={`flex w-full items-center mb-3 ${
                   message.writtenByMe ? 'flex-row-reverse content-end' : ''
                 }`}
-                title={moment(message.date).format('LLL')}
               >
+                <ReactTooltip />
                 <img
                   className="m-1"
                   width={26}

@@ -46,7 +46,7 @@ const LandingPage = ({ users, chats, messages }: LandingPageProps) => {
 
   return (
     <section className="flex w-full h-[100vh]">
-      <nav className="w-[320px] p-[12px]  h-[100vh] overflow-auto">
+      <nav className="w-[320px] p-[12px] h-[100vh] overflow-auto">
         <ClubLogoSvg className="w-[114px] m-auto mt-[14px] mb-[14px]" />
         <NavHeader chatsCount={chats.length} />
         <Chats
