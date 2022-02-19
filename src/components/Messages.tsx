@@ -79,7 +79,13 @@ const Messages = ({ user, messages }: MessagesProps) => {
                   data-tip={message.writtenByMe ? 'Me' : user.name}
                 />
                 <span
-                  className="text-sm whitespace-pre"
+                  className={`text-sm whitespace-pre rounded-2xl p-1 m-1 pl-3 pr-3`}
+                  style={{
+                    backgroundColor: message.writtenByMe
+                      ? '#4c734c'
+                      : '#f3f3f3',
+                    color: message.writtenByMe ? '#fff' : '#000'
+                  }}
                   data-tip={moment(message.date).format('LLL')}
                 >
                   {message.content}
