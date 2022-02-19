@@ -40,7 +40,8 @@ const Messages = ({ user, messages }: MessagesProps) => {
 
   useEffect(() => {
     input.current.focus();
-  }, [input.current]);
+    setSearch('');
+  }, [input.current, user.id]);
 
   const scrollToBottom = () => {
     if (messagesView.current) messagesView.current.scrollTop = 1000000;
@@ -136,6 +137,7 @@ const Messages = ({ user, messages }: MessagesProps) => {
                 type="text"
                 placeholder="Search a message"
                 onChange={(e) => setSearch(e.currentTarget.value)}
+                value={search}
               />
               <SearchIconSvg className="absolute top-2 left-2 " />
             </div>
