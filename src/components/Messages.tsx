@@ -66,7 +66,7 @@ const Messages = ({ user, messages }: MessagesProps) => {
     <>
       <article className="flex-1 border-r border-l border-silver justify-between flex flex-col ">
         <header
-          className={`flex items-center border-b-2 p-3]`}
+          className="flex items-center border-b-2 p-3"
           style={{ height: headerHeight }}
         >
           <Avatar user={user} />
