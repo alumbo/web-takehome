@@ -35,6 +35,10 @@ const Messages = ({ user, messages }: MessagesProps) => {
     setMessages(messages);
   }, [messages]);
 
+  useEffect(() => {
+    input.current.focus();
+  }, [input.current]);
+
   const scrollToBottom = () => {
     if (messagesView.current) messagesView.current.scrollTop = 1000000;
   };
