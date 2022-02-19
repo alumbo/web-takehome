@@ -35,22 +35,25 @@ const Messages = ({ user, messages }: MessagesProps) => {
           {messages.map((message) => {
             return (
               <li
-                data-tip={moment(message.date).format('LLL')}
                 className={`flex w-full items-center mb-3 ${
                   message.writtenByMe ? 'flex-row-reverse content-end' : ''
                 }`}
               >
-                <ReactTooltip />
                 <img
                   className="m-1"
                   width={26}
                   src={
                     message.writtenByMe ? ProfilePicture : user.profilePicture
                   }
+                  data-tip={user.name}
                 />
-                <span className="text-sm whitespace-pre">
+                <span
+                  className="text-sm whitespace-pre"
+                  data-tip={moment(message.date).format('LLL')}
+                >
                   {message.content}
                 </span>
+                <ReactTooltip />
               </li>
             );
           })}
