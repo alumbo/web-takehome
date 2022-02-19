@@ -11,7 +11,7 @@ yarn
 Launch
 
 ```
-yarn next start
+yarn next
 ```
 
 [Demo](https://messenger-challenge.herokuapp.com)
