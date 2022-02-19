@@ -9,7 +9,6 @@ import NavHeader from 'components/NavHeader';
 import Chats from 'components/Chats';
 import { useEffect, useState } from 'react';
 import Messages from 'components/Messages';
-import Avatar from 'components/Avatar';
 
 export interface LandingPageProps {
   users: UserInterface[];
@@ -62,15 +61,6 @@ const LandingPage = ({ users, chats, messages }: LandingPageProps) => {
       ) : (
         '...'
       )}
-      <aside className="w-[320px]  p-4">
-        {selectedUser ? (
-          <div className="text-center">
-            <Avatar user={selectedUser} />
-            <br />
-            <span className="text-lg">{selectedUser.name}</span>
-          </div>
-        ) : null}
-      </aside>
     </section>
   );
 };
