@@ -47,7 +47,7 @@ const Messages = ({ user, messages }: MessagesProps) => {
   };
   useEffect(() => {
     scrollToBottom();
-  }, [messagesView.current, messagesLive]);
+  }, [messagesView.current, filteredMessages]);
 
   const [search, setSearch] = useState('');
   // filter by search string
