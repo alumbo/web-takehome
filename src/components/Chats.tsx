@@ -16,7 +16,6 @@ const Chats = ({
   selectedChatId
 }: ChatsProps) => {
   const getMessage = (id) => messages.find((m) => m.id === id);
-
   const fullfilledChats = chats.map((chat) => {
     return {
       ...chat,
@@ -46,7 +45,7 @@ const Chats = ({
             .indexOf(search.toLocaleLowerCase()) !== -1
       )
     );
-  }, [search]);
+  }, [search, selectedChatId]);
 
   // clear filter search when select chat
   const searchInput = useRef<HTMLInputElement>();
@@ -71,9 +70,10 @@ const Chats = ({
         {filteredChats.map((chat) => {
           const user = chat.user;
           const lastMessage = chat.fullMessage;
+          console.log('chat.seen', chat.seen);
           return (
             <li
-              className={`flex items-start p-[7px] rounded-2xl ${
+              className={`flex items-start p-[7px] rounded-2xl relative ${
                 selectedChatId === chat.id ? 'bg-[#f3f3f3]' : 'cursor-pointer'
               }`}
               key={chat.id}
@@ -89,6 +89,9 @@ const Chats = ({
                   </span>
                 </span>
               </div>
+              {chat.seen || selectedChatId === chat.id ? null : (
+                <div className="absolute rounded-full bg-[#2f7ef6] w-[10px] h-[10px] right-2 top-2"></div>
+              )}
             </li>
           );
         })}

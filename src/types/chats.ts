@@ -9,4 +9,6 @@ export default interface ChatInterface {
   messages: string[];
   // last message that should be displayed in the chat preview
   lastMessage: string;
+  // has been seen
+  seen?: boolean;
 }
