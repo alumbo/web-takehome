@@ -70,7 +70,6 @@ const Chats = ({
         {filteredChats.map((chat) => {
           const user = chat.user;
           const lastMessage = chat.fullMessage;
-          console.log('chat.seen', chat.seen);
           return (
             <li
               className={`flex items-start p-[7px] rounded-2xl relative ${

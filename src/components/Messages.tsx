@@ -3,7 +3,7 @@ import UserInterface from 'types/users';
 import Avatar from './Avatar';
 import ProfilePicture from 'images/profilePicture.png';
 import moment from 'moment';
-import { useEffect, useRef } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
 
 interface MessagesProps {
@@ -13,9 +13,34 @@ interface MessagesProps {
 const Messages = ({ user, messages }: MessagesProps) => {
   const headerHeight = 75;
   const messagesView = useRef<HTMLDivElement>();
+  const input = useRef<HTMLInputElement>();
+  const [messagesLive, setMessages] = useState<MessageInterface[]>(messages);
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    const newMessage = input.current.value;
+    input.current.value = '';
+    setMessages([
+      ...messagesLive,
+      {
+        id: `message-${messages.length.toString()}`,
+        chatId: messages[0].chatId,
+        writtenByMe: true,
+        content: newMessage,
+        date: moment().toString()
+      }
+    ]);
+  };
+
   useEffect(() => {
-    messagesView.current.scrollTop = messagesView.current.scrollHeight;
-  }, [messagesView.current, user.id]);
+    setMessages(messages);
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    if (messagesView.current) messagesView.current.scrollTop = 1000000;
+  };
+  useEffect(() => {
+    scrollToBottom();
+  }, [messagesView.current, messagesLive]);
   return (
     <article className="flex-1 border-r border-l border-silver justify-between flex flex-col ">
       <header
@@ -25,6 +50,7 @@ const Messages = ({ user, messages }: MessagesProps) => {
         <span className="pl-3 text-xl">{user.name}</span>
       </header>
       <div
+        id="messages"
         className="overflow-auto"
         style={{
           height: `calc(100vh-${headerHeight}px)`
@@ -32,10 +58,11 @@ const Messages = ({ user, messages }: MessagesProps) => {
         ref={messagesView}
       >
         <ul>
-          {messages.map((message) => {
+          {messagesLive.map((message) => {
             return (
               <li
-                className={`flex w-full items-center mb-3 ${
+                key={message.id}
+                className={`flex w-full items-center mb-3 pl-3 pr-3 ${
                   message.writtenByMe ? 'flex-row-reverse content-end' : ''
                 }`}
               >
@@ -45,7 +72,7 @@ const Messages = ({ user, messages }: MessagesProps) => {
                   src={
                     message.writtenByMe ? ProfilePicture : user.profilePicture
                   }
-                  data-tip={user.name}
+                  data-tip={message.writtenByMe ? 'Me' : user.name}
                 />
                 <span
                   className="text-sm whitespace-pre"
@@ -58,6 +85,14 @@ const Messages = ({ user, messages }: MessagesProps) => {
             );
           })}
         </ul>
+        <form className="pl-3 pr-3 mb-2" onSubmit={(e) => onSubmit(e)}>
+          <input
+            className="bg-[#f3f3f3] w-full rounded-full border-0 p-[2px] pl-3 text-sm "
+            type="text"
+            placeholder="Aa"
+            ref={input}
+          />
+        </form>
       </div>
     </article>
   );
